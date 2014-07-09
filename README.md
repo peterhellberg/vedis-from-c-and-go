@@ -20,5 +20,17 @@ $ go get github.com/icholy/vedis
 ## Usage
 
 ``` sh
-make
+$ make
+Building the examples:
+go build -o bin/example-from-go example.go
+gcc example.c vedis.c -o bin/example-from-c
+
+Running C example:
+
+ foo: DATA FROM C
+
+Running Go example:
+
+ foo: DATA FROM C
+ bar: 123
 ```
