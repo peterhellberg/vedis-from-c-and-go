@@ -1,6 +1,6 @@
-# Experimenting with Vedis from Go and C
+# Experimenting with Vedis from C and Go
 
-Just playing around with Vedis and refreshing my rusty C.
+Just playing around with Vedis and refreshing my rusty C programming skills.
 
 ## Vedis?
 
