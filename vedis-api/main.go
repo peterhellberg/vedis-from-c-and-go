@@ -18,7 +18,10 @@ func main() {
 
 	// Open a vedis database
 	v, err := vedis.Open(*db)
-	check(err, "Error opening Vedis database.")
+	if err != nil {
+		fmt.Println("Error opening Vedis database.", err)
+		os.Exit(1)
+	}
 	defer v.Close()
 
 	// Create a new logger
@@ -52,9 +55,10 @@ func storeHandler(v *vedis.Store, l *log.Logger) http.Handler {
 			if err != nil {
 				l.Printf("Error: %s", err)
 			} else {
-				err := v.KvStore(key, val)
-				if err != nil {
+				if err := v.KvStore(key, val); err != nil {
 					l.Printf("Error: %s", err)
+				} else if err := v.Commit(); err == nil {
+					l.Printf("Stored: '%s' in %s", val, key)
 				}
 			}
 		}
@@ -67,11 +71,4 @@ func getAddr() string {
 	}
 
 	return ":6600"
-}
-
-func check(err error, message interface{}) {
-	if err != nil {
-		fmt.Println(message, err)
-		os.Exit(1)
-	}
 }
